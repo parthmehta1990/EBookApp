@@ -1,3 +1,6 @@
+import 'package:ebookapp/consttants.dart';
+import 'package:ebookapp/screens/HomeScreen.dart';
+import 'package:ebookapp/widgets/rounded_button.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -7,64 +10,70 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      title: 'Hand Book',
       theme: ThemeData(
-
+        scaffoldBackgroundColor: Colors.white,
+        textTheme: Theme.of(context).textTheme.apply(
+              displayColor: kBlackColor,
+            ),
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: WelcomeScreen(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-
-      _counter++;
-    });
-  }
-
+class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      appBar: AppBar(
-
-        title: Text(widget.title),
-      ),
-      body: Center(
-
+      body: Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          image:DecorationImage(
+            image:  AssetImage("assets/images/Bitmap.png"),
+            fit: BoxFit.fill
+          )
+        ),
         child: Column(
-
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
+            RichText(
+              text: TextSpan(
+                style: Theme.of(context).textTheme.display3,
+                children: [
+                  TextSpan(
+                    text: "Hand",
+                  ),
+                  TextSpan(
+                    text: "Book",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  )
+                ]
+              ),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
+            SizedBox(
+              width: MediaQuery.of(context).size.width*.6,
+              child: RoundedButton(
+                text: "Start Reading",
+                fontSize: 20,
+                press: (){
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return HomeScreen();
+                      },
+                    ),
+                  );
+                },
+              ),
             ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
+
